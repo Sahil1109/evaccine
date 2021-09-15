@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { selectUser } from "./features/userSlice";
+import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -10,12 +8,13 @@ import Main from "./pages/Main";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Schedule from "./pages/Schedule";
-import { login, logout } from "./features/userSlice";
+import { selectUser } from "./features/userSlice";
+import { useSelector } from "react-redux";
 
-function App() {
-  //const user = useSelector(selectUser);
-  const user = null;
-  //console.log("user", user);
+const App = () => {
+  const user = useSelector(selectUser);
+  // const user = null;
+  console.log("user", user);
   // const dispatch = useDispatch();
   // useEffect(() => {
   //   //   auth.onAuthStateChanged((userAuth) => {
@@ -34,7 +33,7 @@ function App() {
   // }, [token]);
   return (
     <div className="App">
-      {!user ? (
+      {!user.token ? (
         <Router>
           <Switch>
             <Route path="/login">
@@ -71,6 +70,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;

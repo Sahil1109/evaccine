@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./Login.css";
 import { useState } from "react";
 import axios from "axios";
@@ -57,8 +57,8 @@ export default function SignIn() {
   const [txnId, settxnId] = useState("");
   const [token, settoken] = useState("");
   const [otp, setotp] = useState("");
-  // const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
+  // dispatch(login({ token: "New", mobile: "new number" }));
   const sendOtp = (e) => {
     e.preventDefault();
 
@@ -106,14 +106,14 @@ export default function SignIn() {
           }
         )
         .then((response) => {
-          // dispatch(
-          //   login({
-          //     token: "response.data.token",
-          //     mobile: "987689562",
-          //   })
-          //);
           const tkn = JSON.stringify(response.data.token);
           settoken(tkn);
+          dispatch(
+            login({
+              token: response.data.token,
+              mobile: mobile,
+            })
+          );
           console.log(response.data.token);
         })
         .then(history.push("/"))
